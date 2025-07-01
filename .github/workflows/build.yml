@@ -27,7 +27,7 @@ jobs:
         run: mvn -B clean verify
 
       - name: Cache SonarQube packages
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -43,14 +43,14 @@ jobs:
           -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
       - name: Upload JaCoCo coverage report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: jacoco-report
           path: target/site/jacoco/
 
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: target/surefire-reports/
