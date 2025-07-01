@@ -1,43 +1,4 @@
-# Maven
-target/
-.mvn/timing.properties
-.mvn/wrapper/maven-wrapper.jar
-
-# IDE - IntelliJ IDEA
-.idea/
-*.iws
-*.iml
-*.ipr
-
-# Compiled files
-*.class
-
-# Log files
-*.log
-logs/
-
-# H2 Database files (für Tests)
-*.db
-*.h2.db
-*.lock.db
-
-# Environment configurations
-.env
-application-local.yml
-application-local.properties
-
-# OS specific files
-.DS_Store
-Thumbs.db
-
-# Test coverage reports
-jacoco.exec
-
-# SonarQube
-.sonar/
-.scannerwork/
-
-# Node (falls Frontend-Komponenten vorhanden sind)
-src/main/frontend/node_modules/
-src/main/frontend/dist/
-npm-debug.log*
+/.idea/
+/target/
+/src/main/frontend/node
+/src/main/frontend/package-lock.json
