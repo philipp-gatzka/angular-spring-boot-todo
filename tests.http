@@ -1,0 +1,99 @@
+### Test 1: Create a new task
+# Erwartetes Ergebnis: 201 Created mit der erstellten Task inkl. ID und Audit-Feldern
+POST http://localhost:8080/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Implement User Authentication",
+  "description": "Add Spring Security with JWT authentication",
+  "completed": false
+}
+
+### Test 2: Create task with invalid data (with ID)
+# Erwartetes Ergebnis: 400 Bad Request
+POST http://localhost:8080/api/tasks
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "Should Fail",
+  "completed": false
+}
+
+### Test 3: Get all tasks (default pagination)
+# Erwartetes Ergebnis: 200 OK mit Page von Tasks, sortiert nach createdAt desc
+GET http://localhost:8080/api/tasks
+
+### Test 4: Get tasks with custom pagination and sorting
+# Erwartetes Ergebnis: 200 OK mit 5 Tasks pro Seite, sortiert nach title aufsteigend
+GET http://localhost:8080/api/tasks?page=0&size=5&sort=title,asc
+
+### Test 5: Search tasks by title
+# Erwartetes Ergebnis: 200 OK mit Tasks, die "implement" im Titel enthalten
+GET http://localhost:8080/api/tasks?search=implement
+
+### Test 6: Filter completed tasks
+# Erwartetes Ergebnis: 200 OK mit nur abgeschlossenen Tasks
+GET http://localhost:8080/api/tasks?completed=true
+
+### Test 7: Get single task by ID
+# Erwartetes Ergebnis: 200 OK mit Task-Details
+# Hinweis: ID anpassen nach Test 1
+GET http://localhost:8080/api/tasks/1
+
+### Test 8: Get non-existing task
+# Erwartetes Ergebnis: 404 Not Found
+GET http://localhost:8080/api/tasks/999
+
+### Test 9: Update existing task
+# Erwartetes Ergebnis: 200 OK mit aktualisierten Daten
+# Hinweis: ID anpassen nach Test 1
+PUT http://localhost:8080/api/tasks/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "Implement User Authentication - Updated",
+  "description": "Add Spring Security with JWT authentication and OAuth2",
+  "completed": true
+}
+
+### Test 10: Update task with mismatched ID
+# Erwartetes Ergebnis: 400 Bad Request
+PUT http://localhost:8080/api/tasks/1
+Content-Type: application/json
+
+{
+  "id": 2,
+  "title": "Mismatched ID",
+  "completed": true
+}
+
+### Test 11: Get tasks by date range
+# Erwartetes Ergebnis: 200 OK mit Tasks im angegebenen Zeitraum
+GET http://localhost:8080/api/tasks/date-range?startDate=2024-01-01T00:00:00Z&endDate=2024-12-31T23:59:59Z
+
+### Test 12: Get open tasks count
+# Erwartetes Ergebnis: 200 OK mit Anzahl offener Tasks
+GET http://localhost:8080/api/tasks/open-count
+
+### Test 13: Get recent tasks (last 7 days default)
+# Erwartetes Ergebnis: 200 OK mit Tasks der letzten 7 Tage
+GET http://localhost:8080/api/tasks/recent
+
+### Test 14: Get recent tasks with custom date
+# Erwartetes Ergebnis: 200 OK mit Tasks seit dem angegebenen Datum
+GET http://localhost:8080/api/tasks/recent?since=2024-01-01T00:00:00Z
+
+### Test 15: Get recently updated tasks
+# Erwartetes Ergebnis: 200 OK mit den 10 zuletzt aktualisierten Tasks
+GET http://localhost:8080/api/tasks/recently-updated
+
+### Test 16: Delete task
+# Erwartetes Ergebnis: 204 No Content
+# Hinweis: ID anpassen nach Test 1
+DELETE http://localhost:8080/api/tasks/1
+
+### Test 17: Delete non-existing task
+# Erwartetes Ergebnis: 404 Not Found
+DELETE http://localhost:8080/api/tasks/999
